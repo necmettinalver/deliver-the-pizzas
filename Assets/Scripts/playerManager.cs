@@ -45,12 +45,27 @@ public class playerManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            maleAnimation.SetBool("isRun", true);
+            
+            if (pizzas.Count > 1)
+            {
+                maleAnimation.SetBool("isCarryRun", true);
+                maleAnimation.SetBool("isCarry", false);
+            }
+            else
+            {
+                maleAnimation.SetBool("isRun", true);
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             maleAnimation.SetBool("isRun", false);
+
+            if (pizzas.Count>1)
+            {
+                maleAnimation.SetBool("isCarryRun", false);
+                maleAnimation.SetBool("isCarry", true);
+            }
         }
 
         if (pizzas.Count>1)
@@ -69,13 +84,25 @@ public class playerManager : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out var hit, 1f))
         {
             Debug.DrawRay(transform.position, transform.forward * 1f, Color.green);
-            if (hit.collider.CompareTag("table") && pizzas.Count < 21)
+            if (hit.collider.CompareTag("table") && pizzas.Count < 14)
             {
                 if (hit.collider.transform.childCount > 2)
                 {
                     var pizza = hit.collider.transform.GetChild(1);
                     pizzas.Add(pizza);
                     pizza.parent = null;
+
+                    if (hit.collider.transform.parent.GetComponent<Cooker>().count_pizzas>1)
+                    {
+                        hit.collider.transform.parent.GetComponent<Cooker>().count_pizzas--;
+                    }
+
+                    if (hit.collider.transform.parent.GetComponent<Cooker>().YAxis>0f)
+                    {
+                        hit.collider.transform.parent.GetComponent<Cooker>().YAxis -= 0.12f;
+                    }
+                    maleAnimation.SetBool("isCarry", true);
+                    maleAnimation.SetBool("isRun",false);
                 }
 
             }
@@ -83,6 +110,22 @@ public class playerManager : MonoBehaviour
         else
         {
             Debug.DrawRay(transform.position, transform.forward * 1f, Color.red);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("table"))
+        {
+            if(pizzas.Count>1)
+            {
+                maleAnimation.SetBool("isCarry", false);
+                maleAnimation.SetBool("isCarryRun", true);
+            }
+            else
+            {
+                maleAnimation.SetBool("isRun", true);
+            }
         }
     }
 }

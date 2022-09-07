@@ -9,8 +9,8 @@ public class Cooker : MonoBehaviour
 
     [SerializeField] private Transform[] pizzasPlace = new Transform[12];
     [SerializeField] private GameObject pizza;
-    [SerializeField] private float pizzaDeliveryTime, YAxis;
-
+    public float pizzaDeliveryTime, YAxis;
+    public int count_pizzas = 0;
     void Start()
     {
         for (int i = 0; i < pizzasPlace.Length; i++)
@@ -22,7 +22,7 @@ public class Cooker : MonoBehaviour
 
     public IEnumerator CookPizza(float delay)
     {
-        var count_pizzas = 0;
+        
         var pizza_index = 0;
 
         while (count_pizzas<100)
@@ -40,6 +40,7 @@ public class Cooker : MonoBehaviour
                 pizza_index = 0;
                 YAxis += 0.12f;
             }
+           
             yield return new WaitForSecondsRealtime(delay);
         }
     }
