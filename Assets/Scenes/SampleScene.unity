@@ -29485,7 +29485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a2e43b47f257e42a550cda7e1b04a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 5
   pizzas: []
   pizzaPlace: {fileID: 1726329750}
 --- !u!95 &950800292
@@ -32487,15 +32487,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4137727885089914676, guid: 017116cb4280b48eca9d618e6bb8a86c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.1969993
+      value: -1.04
       objectReference: {fileID: 0}
     - target: {fileID: 4137727885089914676, guid: 017116cb4280b48eca9d618e6bb8a86c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.9599999
+      value: 11.4
       objectReference: {fileID: 0}
     - target: {fileID: 4137727885089914676, guid: 017116cb4280b48eca9d618e6bb8a86c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.3755014
+      value: -14.8
       objectReference: {fileID: 0}
     - target: {fileID: 4137727885089914676, guid: 017116cb4280b48eca9d618e6bb8a86c, type: 3}
       propertyPath: m_LocalRotation.w
