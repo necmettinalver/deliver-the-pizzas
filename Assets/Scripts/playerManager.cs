@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 
 
 
@@ -13,7 +14,7 @@ public class playerManager : MonoBehaviour
     private Animator maleAnimation;
     [SerializeField] private List<Transform> pizzas = new List<Transform>();
     [SerializeField] private Transform pizzaPlace;
-
+    private float YAxis, delay;
 
     void Start()
     {
@@ -105,6 +106,29 @@ public class playerManager : MonoBehaviour
                     maleAnimation.SetBool("isRun",false);
                 }
 
+            }
+            if (hit.collider.CompareTag("pizzaPlace")&& pizzas.Count>1)
+            {
+                var work_desk = hit.collider.transform;
+                if (work_desk.childCount>0)
+                {
+                    YAxis = work_desk.GetChild(work_desk.childCount - 1).position.y;
+                }
+                else
+                {
+                    YAxis = work_desk.position.y;
+                }
+
+                for (var index = pizzas.Count - 1 ; index>=1; index--)
+                {
+                    pizzas[index].DOJump(new Vector3(work_desk.position.x,YAxis,work_desk.position.z),2f,1,0.5f).SetDelay(delay).SetEase(Ease.Flash);
+
+                    pizzas.ElementAt(index).parent = work_desk;
+                    pizzas.RemoveAt(index);
+                    
+                    YAxis += 0.12f;
+                    delay += 0.02f;
+                }
             }
         }
         else
