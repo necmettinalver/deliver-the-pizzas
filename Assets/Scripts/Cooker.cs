@@ -28,7 +28,7 @@ public class Cooker : MonoBehaviour
         while (count_pizzas<100)
         {
             GameObject hotPizza = Instantiate(pizza, new Vector3(transform.position.x, -3f, transform.position.z),Quaternion.identity,transform.GetChild(1));
-
+            
             hotPizza.transform.DOJump(new Vector3(pizzasPlace[pizza_index].position.x, pizzasPlace[pizza_index].position.y+YAxis, pizzasPlace[pizza_index].position.z),2f,1,0.5f).SetEase(Ease.OutQuad);
 
             if (pizza_index < 11)
