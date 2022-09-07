@@ -129,6 +129,14 @@ public class playerManager : MonoBehaviour
                     YAxis += 0.12f;
                     delay += 0.02f;
                 }
+                work_desk.parent.GetChild(work_desk.parent.childCount - 1).GetComponent<Renderer>().enabled = false;
+
+                if (pizzas.Count<=1)
+                {
+                    
+                    maleAnimation.SetBool("idle", true);
+                    maleAnimation.SetBool("isCarryRun", false);
+                }
             }
         }
         else
@@ -139,6 +147,15 @@ public class playerManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.CompareTag("pizzaPlace"))
+        {
+            //maleAnimation.SetBool("isCarry", false);
+            maleAnimation.SetBool("isCarryRun", false);
+            maleAnimation.SetBool("idle", false); 
+            maleAnimation.SetBool("isRun", true);
+            delay = 0f;
+        }
+
         if (other.CompareTag("table"))
         {
             if(pizzas.Count>1)
