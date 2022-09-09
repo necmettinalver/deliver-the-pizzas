@@ -109,27 +109,27 @@ public class playerManager : MonoBehaviour
             }
             if (hit.collider.CompareTag("pizzaPlace")&& pizzas.Count>1)
             {
-                var work_desk = hit.collider.transform;
-                if (work_desk.childCount>0)
+                var dinner_table = hit.collider.transform;
+                if (dinner_table.childCount>0)
                 {
-                    YAxis = work_desk.GetChild(work_desk.childCount - 1).position.y;
+                    YAxis = dinner_table.GetChild(dinner_table.childCount - 1).position.y;
                 }
                 else
                 {
-                    YAxis = work_desk.position.y;
+                    YAxis = dinner_table.position.y;
                 }
 
                 for (var index = pizzas.Count - 1 ; index>=1; index--)
                 {
-                    pizzas[index].DOJump(new Vector3(work_desk.position.x,YAxis,work_desk.position.z),2f,1,0.5f).SetDelay(delay).SetEase(Ease.Flash);
+                    pizzas[index].DOJump(new Vector3(dinner_table.position.x,YAxis,dinner_table.position.z),2f,1,0.5f).SetDelay(delay).SetEase(Ease.Flash);
 
-                    pizzas.ElementAt(index).parent = work_desk;
+                    pizzas.ElementAt(index).parent = dinner_table;
                     pizzas.RemoveAt(index);
                     
                     YAxis += 0.12f;
                     delay += 0.02f;
                 }
-                work_desk.parent.GetChild(work_desk.parent.childCount - 1).GetComponent<Renderer>().enabled = false;
+                dinner_table.parent.GetChild(dinner_table.parent.childCount - 1).GetComponent<Renderer>().enabled = false;
 
                 if (pizzas.Count<=1)
                 {
@@ -143,6 +143,15 @@ public class playerManager : MonoBehaviour
         {
             Debug.DrawRay(transform.position, transform.forward * 1f, Color.red);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("pizzaPlace"))
+        {
+            other.GetComponent<DinnerTable>().Eat();
+        }
+         
     }
 
     private void OnTriggerExit(Collider other)
