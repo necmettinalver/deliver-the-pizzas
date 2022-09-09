@@ -1,17 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class DinnerTable : MonoBehaviour                                         
 {
     public Animator woman_customer_anim;
     public Animator man_customer_anim;
 
+    [SerializeField] private Transform moneyPlace;
+    [SerializeField] private GameObject money;
+    private float YAxis;
+    private IEnumerator makeMoneyIE;
+
+    private void Start()
+    {
+        makeMoneyIE = MakeMoney();
+    }
     public void Eat()
     {
         woman_customer_anim.SetBool("isEating",true);
         man_customer_anim.SetBool("isEating", true);
         InvokeRepeating("DOSumbitPizza", 2f, 1f);
+
+        StartCoroutine(makeMoneyIE);
+    }
+
+    private IEnumerator MakeMoney()
+    {
+        var counter = 0;
+        var moneyPlaceIndex = 0;
+
+        yield return new WaitForSecondsRealtime(2);
+
+        while (counter<transform.childCount)
+        {
+            GameObject newMoney = Instantiate(money, new Vector3(moneyPlace.GetChild(moneyPlaceIndex).position.x, YAxis, moneyPlace.GetChild(moneyPlaceIndex).position.z), moneyPlace.GetChild(moneyPlaceIndex).rotation);
+
+            newMoney.transform.DOScale(new Vector3(8f, 8f, 8f), 5f).SetEase(Ease.OutElastic);
+            if (moneyPlaceIndex<8)
+            {
+                moneyPlaceIndex++;
+            }
+            else
+            {
+                moneyPlaceIndex = 0;
+                YAxis += 1f;
+            }
+            yield return new WaitForSecondsRealtime(3f);
+        }
     }
 
     void DOSumbitPizza()
@@ -24,6 +61,10 @@ public class DinnerTable : MonoBehaviour
         {
             woman_customer_anim.SetBool("isEating", false);
             man_customer_anim.SetBool("isEating", false);
+
+            var desk = transform.parent;
+            desk.GetChild(desk.childCount - 1).GetComponent<Renderer>().enabled = true;
+            StopCoroutine(makeMoneyIE);
         }
     }
 }
