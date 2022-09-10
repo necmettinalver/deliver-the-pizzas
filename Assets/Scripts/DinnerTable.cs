@@ -12,10 +12,11 @@ public class DinnerTable : MonoBehaviour
     [SerializeField] private GameObject money;
     private float YAxis;
     private IEnumerator makeMoneyIE;
+    int moneyPlaceIndex = 0;
 
     private void Start()
     {
-        makeMoneyIE = MakeMoney();
+        //makeMoneyIE = MakeMoney();
     }
     public void Eat()
     {
@@ -23,9 +24,9 @@ public class DinnerTable : MonoBehaviour
         man_customer_anim.SetBool("isEating", true);
         InvokeRepeating("DOSumbitPizza", 2f, 1f);
 
-        StartCoroutine(makeMoneyIE);
+       // StartCoroutine(makeMoneyIE);
     }
-
+    /*
     private IEnumerator MakeMoney()
     {
         var counter = 0;
@@ -35,27 +36,38 @@ public class DinnerTable : MonoBehaviour
 
         while (counter<transform.childCount)
         {
-            GameObject newMoney = Instantiate(money, new Vector3(moneyPlace.GetChild(moneyPlaceIndex).position.x, YAxis, moneyPlace.GetChild(moneyPlaceIndex).position.z), moneyPlace.GetChild(moneyPlaceIndex).rotation);
-
-            newMoney.transform.DOScale(new Vector3(8f, 8f, 8f), 5f).SetEase(Ease.OutElastic);
-            if (moneyPlaceIndex<8)
+            GameObject newMoney = Instantiate(money, new Vector3(moneyPlace.GetChild(moneyPlaceIndex).position.x, YAxis, moneyPlace.GetChild(moneyPlaceIndex).position.z), money.transform.rotation);
+            
+            //newMoney.transform.DOScale(new Vector3(8f, 8f, 8f), 0.5f).SetEase(Ease.OutElastic);
+            if (moneyPlaceIndex<moneyPlace.childCount - 1)
             {
                 moneyPlaceIndex++;
             }
             else
             {
                 moneyPlaceIndex = 0;
-                YAxis += 1f;
+                YAxis += 0.2f;
             }
             yield return new WaitForSecondsRealtime(3f);
         }
     }
-
+    */
     void DOSumbitPizza()
     {
         if (transform.childCount>0)
         {
             Destroy(transform.GetChild(transform.childCount - 1).gameObject, 1f);
+            GameObject newMoney = Instantiate(money, new Vector3(moneyPlace.GetChild(moneyPlaceIndex).position.x, YAxis, moneyPlace.GetChild(moneyPlaceIndex).position.z), money.transform.rotation);
+
+            if (moneyPlaceIndex < moneyPlace.childCount - 1)
+            {
+                moneyPlaceIndex++;
+            }
+            else
+            {
+                moneyPlaceIndex = 0;
+                YAxis += 0.2f;
+            }
         }
         else
         {
@@ -64,7 +76,8 @@ public class DinnerTable : MonoBehaviour
 
             var desk = transform.parent;
             desk.GetChild(desk.childCount - 1).GetComponent<Renderer>().enabled = true;
-            StopCoroutine(makeMoneyIE);
+            //StopCoroutine(makeMoneyIE);
+            YAxis = 0f;
         }
     }
 }

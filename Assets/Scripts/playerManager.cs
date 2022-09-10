@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using UnityEngine.UI;
 
 
 
@@ -15,7 +16,9 @@ public class playerManager : MonoBehaviour
     [SerializeField] private List<Transform> pizzas = new List<Transform>();
     [SerializeField] private Transform pizzaPlace;
     private float YAxis, delay;
+    [SerializeField] Text moneyCounter;
 
+    
     void Start()
     {
         cam = Camera.main;
@@ -150,6 +153,13 @@ public class playerManager : MonoBehaviour
         if (other.CompareTag("pizzaPlace"))
         {
             other.GetComponent<DinnerTable>().Eat();
+        }
+        if (other.CompareTag("dollar"))
+        {
+            Destroy(other.gameObject);
+            PlayerPrefs.SetInt("dollar", PlayerPrefs.GetInt("dollar") + 5);
+            
+            moneyCounter.text = "$" + PlayerPrefs.GetInt("dollar");
         }
          
     }
