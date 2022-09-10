@@ -16,14 +16,15 @@ public class playerManager : MonoBehaviour
     [SerializeField] private List<Transform> pizzas = new List<Transform>();
     [SerializeField] private Transform pizzaPlace;
     private float YAxis, delay;
-    [SerializeField] Text moneyCounter;
-
+    public Text moneyCounter;
+    public static playerManager playerManagerInstance;
     
     void Start()
     {
         cam = Camera.main;
         maleAnimation = GetComponent<Animator>();
         pizzas.Add(pizzaPlace);
+        playerManagerInstance = this;
         
     }
 
@@ -159,7 +160,7 @@ public class playerManager : MonoBehaviour
             Destroy(other.gameObject);
             PlayerPrefs.SetInt("dollar", PlayerPrefs.GetInt("dollar") + 5);
             
-            moneyCounter.text = "$" + PlayerPrefs.GetInt("dollar");
+            moneyCounter.text = PlayerPrefs.GetInt("dollar").ToString("C0");
         }
          
     }
