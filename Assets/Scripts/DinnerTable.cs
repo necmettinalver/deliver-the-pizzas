@@ -54,7 +54,6 @@ public class DinnerTable : MonoBehaviour
     */
     void DOSumbitPizza()
     {
-        moneyPlaceIndex = 0;
         if (transform.childCount>0)
         {
             Destroy(transform.GetChild(transform.childCount - 1).gameObject, 1f);

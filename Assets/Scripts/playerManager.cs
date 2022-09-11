@@ -26,6 +26,7 @@ public class playerManager : MonoBehaviour
         pizzas.Add(pizzaPlace);
         playerManagerInstance = this;
         
+
     }
 
     // Update is called once per frame
@@ -158,6 +159,7 @@ public class playerManager : MonoBehaviour
         if (other.CompareTag("dollar"))
         {
             Destroy(other.gameObject);
+            
             PlayerPrefs.SetInt("dollar", PlayerPrefs.GetInt("dollar") + 5);
             
             moneyCounter.text = PlayerPrefs.GetInt("dollar").ToString("C0");

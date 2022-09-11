@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -46,11 +44,13 @@ public class unlockToDesk : MonoBehaviour
 
             if (deskRemainPrice == 0)
             {
-                GameObject Desk = Instantiate(newDesk,new Vector3(transform.position.x,0f,transform.position.z),Quaternion.Euler(0f,-90f,0f));
+                GameObject Desk = Instantiate(newDesk,new Vector3(transform.position.x,0f,transform.position.z),Quaternion.Euler(0f,0f,0f));
 
                 Desk.transform.DOScale(1f, 1f).SetEase(Ease.OutElastic);
 
                 unlockProgressObj.SetActive(false);
+
+                buildNavMesh.BuildNavMesh();
             
             }
         }
