@@ -51,7 +51,8 @@ public class unlockToDesk : MonoBehaviour
                 unlockProgressObj.SetActive(false);
 
                 buildNavMesh.BuildNavMesh();
-            
+                //Disable Batching Static on all static objects.
+
             }
         }
         
